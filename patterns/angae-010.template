@@ -1,0 +1,35 @@
+// Files are in little endian
+struct FILE {
+    // from loadHeaderOnly
+    struct HEAD {
+        char    PatternDate[4] <bgcolor=cLtBlue>; // a timestamp in little endian; there is also a "PatternDate" in the header data, maybe something different
+
+        // the following 7 fields are "HeadDatas" 
+        char    unknown[1000] <bgcolor=cLtGray>;
+        int     PackageID  <bgcolor=cLtBlue>; // see CUserPatternDBMgr::SetPackageID
+        int     unknown2 <bgcolor=cLtGray>; // next 4 are rather unclear, info from CPatternDBMgr::GetOSFile()
+        int     PatternDate <bgcolor=cBlue>;
+        int     FileCount <bgcolor=cLtBlue>;
+        int     HeadPos <bgcolor=cBlue>;
+        int     RealSize <bgcolor=cLtBlue>;
+
+        // Count is split into two 32bit integers, unclear why
+        int     Count1 <bgcolor=cPurple>; // this is 153719 in little endian
+        int     Count2 <bgcolor=cPurple>;
+    } magic <bgcolor=cLtGray>;
+
+    struct PACKAGES {
+        int     RecLen <bgcolor=cYellow>; // length of the pattern, 0xc8, 200 byte
+        int     PackageID <bgcolor=cGreen>; // mostly goes from 01 to 0E max at position 1.
+        //ushort     incrementing <bgcolor=cLtGray>; // this increments over the file. Sometimes multiple patterns have the same "id". Maybe the same identifier identifies a single file? Interestingly this is going up to FF FE.
+        char       HeadData2[8] <bgcolor=cLtGray>; // looks like there is another header
+
+        char    content[192] <bgcolor=cRed>; // cannot confirm that I can decrypt this out of the box with openssl. 
+    } packages[153719];
+
+    // sha1 of whatever
+    struct CHECKSUM {
+        char sha1[20] <bgcolor=cPurple>;
+    } checksum;
+
+} file;
