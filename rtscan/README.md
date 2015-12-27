@@ -1,6 +1,6 @@
 # Interact with `rtscan`
 
-`resctl.py` can be used to interact with `rtscan` kernel module via ioctl calls to `/dev/res`.
+`resctl.py` can be used to interact with `rtscan` kernel module via ioctl calls to `/dev/res`. `rtscan.ko` is the original kernel module from Red Star OS 3.0 Desktop.
 
 *Note*: On Red Star 3.0 this needs to be executed with root privileges.
 
