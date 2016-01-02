@@ -5,13 +5,21 @@ This repository includes several binaries from and tools for Red Star OS. These 
 ## Disable malicious components
 
 1. Get root privileges via `/usr/sbin/rootsetting`
-2. Kill `securityd`
+2. Disable SELinux
+
+    SELinux protects several files an directories (e.g. /var/log). It should be disabled in order to make changes to some parts of the system.
+
+        setenforce 0
+
+    In order to keep SELinux disabled after rebooting, append `selinux=0` to the kernel line in the GRUB config file (/boot/grub/grub.conf).
+
+3. Kill `securityd`
 
     Killing `securityd` will prevent the system from rebooting when editing/deleting various protected files.
 
         killall -9 securityd
 
-3. Disable `rtscan` kernel module
+4. Disable `rtscan` kernel module
 
     Either via `resctl.py` (see `rtscan`) or via a Python shell as follows:
 
@@ -25,20 +33,20 @@ This repository includes several binaries from and tools for Red Star OS. These 
 
     After disabling `rtscan` protected processes like `opprc` will become killable.
 
-4. Kill `scnprc` and `opprc`
+5. Kill `scnprc` and `opprc`
 
         killall scnprc
         killall opprc
 
-5. Replace `/usr/lib/libos.so.0.0.0`
+6. Replace `/usr/lib/libos.so.0.0.0`
 
     See `libos` for further information. Replacing this file will prevent the system from rebooting via `securityd` after rebooting the system. It also will prevent reboot loops by `kdm` rendering the system unusable.
 
-6. Delete `/usr/share/autostart/scnprc.desktop`
+7. Delete `/usr/share/autostart/scnprc.desktop`
 
     Deleting this file will prevent `kdeinit` from starting the framework after a system reboot.
 
-7. Reboot the system
+8. Reboot the system
 
 ## Disclaimer
 
