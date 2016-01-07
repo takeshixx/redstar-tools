@@ -4,6 +4,10 @@ This repository includes several binaries from and tools for Red Star OS. These 
 
 ## Disable malicious components
 
+The easiest way is to run the `defuse.sh` script on Red Star OS 3.0 Desktop (requires root privileges).
+
+### Manual steps
+
 1. Get root privileges via `/usr/sbin/rootsetting`
 2. Disable SELinux
 
@@ -46,7 +50,34 @@ This repository includes several binaries from and tools for Red Star OS. These 
 
     Deleting this file will prevent `kdeinit` from starting the framework after a system reboot.
 
-8. Reboot the system
+8. Delete `/etc/init/ctguard.conf`
+
+    Deleting this file will prevent `init` from starting `opprc` even when `scnprc` is not running.
+
+9. Reboot the system
+
+## Debugging
+
+### Prepare building environment
+
+The default installation of Red Star OS 3.0 Desktop does not include GCC but the ISO includes the required packages.
+
+1. Insert the Red Star OS ISO to the system
+2. Go to `/media/RedStar\ Desktop\ 3.0/RedStar/RPMS`
+3. Install the following packages:
+
+    yum localinstall glibc-headers-2.10.1-2.i386.rpm
+    yum localinstall glibc-devel-2.10.1-2.i386.rpm
+    yum localinstall ncurses-devel-5.6-0.rs3.0.i386.rpm
+    yum localinstall gcc-4.4.0-4.i386.rpm
+
+Now it is possible to build a recent (e.g. the latest) version of GDB for better debugging.
+
+### Install non-stripped threading libraries
+
+The default installation of Red Star OS 3.0 Desktop does not allow to debug threads with the shipped version of GDB in e.g. `scnprc` and `opprc` because the required `libpthread.so.0` library is stripped.
+
+Use the `libpthread-2.10.1.so`/`libpthread.so.0` and `libthread_db-1.0.so`/`libthread_db.so.1` libraries from the `glibc-2.10.1-2.i686.rpm` package of [Fedora 11](http://rpm.pbone.net/index.php3/stat/4/idpl/18887613/dir/fedora_11/com/glibc-2.10.1-2.i686.rpm.html).
 
 ## Disclaimer
 
