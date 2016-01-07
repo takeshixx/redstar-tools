@@ -107,7 +107,7 @@ main(){
     disable_selinux
     
     echo "Killing securityd"
-    killall -9 securityda 2>/dev/null
+    killall -9 securityd 2>/dev/null
     
     echo "Disabling rtscan"
     disable_rtscan
