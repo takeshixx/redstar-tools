@@ -62,14 +62,14 @@ The easiest way is to run the `defuse.sh` script on Red Star OS 3.0 Desktop (req
 
 The default installation of Red Star OS 3.0 Desktop does not include GCC but the ISO includes the required packages.
 
-1. Insert the Red Star OS ISO to the system
+1. Insert the Red Star OS ISO into the system
 2. Go to `/media/RedStar\ Desktop\ 3.0/RedStar/RPMS`
 3. Install the following packages:
 
-    yum localinstall glibc-headers-2.10.1-2.i386.rpm
-    yum localinstall glibc-devel-2.10.1-2.i386.rpm
-    yum localinstall ncurses-devel-5.6-0.rs3.0.i386.rpm
-    yum localinstall gcc-4.4.0-4.i386.rpm
+        yum localinstall glibc-headers-2.10.1-2.i386.rpm
+        yum localinstall glibc-devel-2.10.1-2.i386.rpm
+        yum localinstall ncurses-devel-5.6-0.rs3.0.i386.rpm
+        yum localinstall gcc-4.4.0-4.i386.rpm
 
 Now it is possible to build a recent (e.g. the latest) version of GDB for better debugging.
 
