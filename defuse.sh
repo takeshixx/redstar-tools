@@ -75,13 +75,13 @@ X2N4YV9maW5hbGl6ZUBAR0xJQkNfMi4xLjMAX2luaXQA"
 
 check_euid(){
     if [ "$(id -u)" != 0 ]; then
-    	echo "You need root privileges to run this script!"
-		exit 1
+        echo "You need root privileges to run this script!"
+        exit 1
     fi
 }
 
 disable_selinux(){
-	setenforce 0
+    setenforce 0
     sed -i'.bak' '/kernel \/boot\/vmlinuz-2.6.38.8-24.rs3.0.i686/ s/$/ selinux=0/' /boot/grub/grub.conf
 }
 
@@ -90,40 +90,40 @@ disable_rtscan(){
 }
 
 replace_libos(){
-	echo "$LIBOS" | base64 -d > /usr/lib/libos.so.0.0.0
-	rm /usr/lib/libos.so.0
-	ln -s /usr/lib/libos.so.0.0.0 /usr/lib/libos.so.0
+    echo "$LIBOS" | base64 -d > /usr/lib/libos.so.0.0.0
+    rm /usr/lib/libos.so.0
+    ln -s /usr/lib/libos.so.0.0.0 /usr/lib/libos.so.0
 }
 
 remove_autostarts(){
-	mv /usr/share/autostart/scnprc.desktop /usr/share/autostart/scnprc.desktop.bak 2>/dev/null
+    mv /usr/share/autostart/scnprc.desktop /usr/share/autostart/scnprc.desktop.bak 2>/dev/null
     mv /etc/init/ctguard.conf /etc/init/ctguard.conf.bak 2>/dev/null
 }
 
 main(){
-	check_euid
-
+    check_euid
+    
     echo "Disabling SELinux"
-	disable_selinux
-	
+    disable_selinux
+    
     echo "Killing securityd"
-	killall -9 securityda 2>/dev/null
+    killall -9 securityda 2>/dev/null
     
     echo "Disabling rtscan"
-	disable_rtscan
-
+    disable_rtscan
+    
     echo "Killing scnprc and opprc"
-	killall scnprc opprc 2>/dev/null
-
+    killall scnprc opprc 2>/dev/null
+    
     echo "Replacing libos"
-	replace_libos
-
+    replace_libos
+    
     echo "Disabling scnprc autostart"
     remove_autostarts
-
-	echo "Done. Please press Return to reboot the system."
-	read -r
-	reboot
+    
+    echo "Done. Please press Return to reboot the system."
+    read -r
+    reboot
 }
 
 main
