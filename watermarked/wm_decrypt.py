@@ -32,7 +32,7 @@ if __name__ == '__main__':
     if not size:
         print('Invalid size')
         sys.exit(1)
-    f.seek(0)
+    f.seek(-7 - size, 2)
     wms = f.read(size)
     # Watermarks are always 24 Byte long.
     if len(wms) % 24 != 0:
