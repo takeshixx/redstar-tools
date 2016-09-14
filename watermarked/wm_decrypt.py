@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # Parses and decrypts watermarks from Red Star OS 3.0.
 # Currently supports only image watermarks.
 import sys
