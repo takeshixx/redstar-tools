@@ -2,17 +2,17 @@
 # Generates a watermark unique to the system when run on Red Star OS.
 # Tested to be compatible with Red Star's default Python 2.6, and does not require pycrypto.
 
-import os, sys, time
+import os, struct, sys, time
 from shutil import copyfile
 
 # Assume this file exists as the basis for watermarking
 fname = "preview_bottle_original.jpg"
 
 # Setup constants and parameters
-eof_size = 6
-checksum_size = 1
+eof_size = 3
+checksum_size = 4
 wm_size = 24
-eof = "000000454f46".decode("hex")
+eof = "454f46".decode("hex")
 file_size = os.path.getsize(fname)
 
 with open(fname, "r+") as f:
@@ -23,7 +23,7 @@ with open(fname, "r+") as f:
       f.seek(file_size - eof_size - checksum_size)
 
       # The checksum value is just a count of the number of watermark bytes to read back in the file
-      checksum = ord(f.read(checksum_size))
+      checksum = struct.unpack("<I", f.read(checksum_size))[0]
       num_wm = checksum / wm_size
       print "Found %d watermarks, removing" % (num_wm)
       f.seek(file_size - eof_size - checksum_size - (wm_size * num_wm))
@@ -47,7 +47,7 @@ with open("tmp_" + fname, "rb") as f:
    f.seek(file_size - eof_size - checksum_size)
 
    # The checksum value is just a count of the number of watermark bytes to read back in the file
-   checksum = ord(f.read(checksum_size))
+   checksum = struct.unpack("<I", f.read(checksum_size))[0]
    num_wm = checksum / wm_size
    print "Found %d watermarks (1 expected)" % (num_wm)
 
