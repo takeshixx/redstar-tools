@@ -6,7 +6,7 @@ Several samples of how Red Star's watermarking alters files are provided.
 
 The general format of the watermarks is:
 
-[24 byte watermark a]..[24 byte watermark n][4 byte checksum][3 byte EOF mark]
+[24 byte watermark 1]..[24 byte watermark n][4 byte checksum][3 byte EOF mark]
 
 The checksum is 4 byte little-endian integer containing a count of the total number of bytes of the preceeding watermarks, i.e. 24 for 1 watermark, 48 for 2, etc.
 
