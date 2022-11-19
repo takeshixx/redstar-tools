@@ -4,7 +4,7 @@ This repository includes several binaries from and tools for Red Star OS. These 
 
 ## Disable malicious components
 
-The easiest way is to run the `defuse.sh` script on Red Star OS 3.0 Desktop (requires root privileges).
+The easiest way is to run the `defuse.sh` script on Red Star OS 3.0 Desktop (requires root privileges), make sure it's executable by running `chmod u+x defuse.sh`.
 
 ### Manual steps
 
