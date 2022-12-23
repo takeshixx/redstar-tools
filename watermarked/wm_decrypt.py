@@ -38,7 +38,8 @@ if __name__ == '__main__':
     if len(wms) % 24 != 0:
         print('Invalid watermark count')
         sys.exit(1)
+    print('Found %d watermarks' % (len(wms)/24))
 
     for i in [wms[i:i+24] for i in range(0, len(wms), 24)]:
-        print(wm_decrypt(i))
-
+        print('\nCiphertext: ' + ':'.join('{0:02x}'.format(ord(c)) for c in i))
+        print('Plaintext: ' + wm_decrypt(i))
